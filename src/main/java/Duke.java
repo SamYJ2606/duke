@@ -12,6 +12,9 @@ public class Duke {
         String bye = "bye";
         String list = "list";
         String done = "done";
+        String todo = "todo";
+        String deadline = "deadline";
+        String event = "event";
         ArrayList<MyTask> mainList = new ArrayList<MyTask>();
 
         System.out.println("Hello! Im Duke");
@@ -27,14 +30,40 @@ public class Duke {
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0;i<mainList.size();i++){
                     int number = i+1;
-                    System.out.println( number + ".[" + mainList.get(i).getStatusIcon() + "] " + mainList.get(i).toString());
+                    //System.out.println( number + ".[" + mainList.get(i).getStatusIcon() + "] " + mainList.get(i).toString());
+                    System.out.println(number + "." + mainList.get(i).toString());
                 }
             } else if (input.contains(done)){
                 int index = input.charAt(input.length()-1) - '1';
                 mainList.get(index).markAsDone();
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("[" + mainList.get(index).getStatusIcon() + "] " + mainList.get(index).toString());
-            } else {
+                //System.out.println("[" + mainList.get(index).getStatusIcon() + "] " + mainList.get(index).toString());
+                System.out.println(mainList.get(index).toString());
+            } else if(input.contains(todo)){
+                String[] inputArray = input.split(" ", 2);
+                MyTask newInput = new ToDo(inputArray[1]);
+                mainList.add(newInput);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newInput.toString());
+                System.out.println("Now you have " + mainList.size() + " tasks in the list.");
+            } else if(input.contains(deadline)){
+                String[] inputArray = input.split(" ", 2);
+                inputArray = inputArray[1].split("/by", 2);
+                MyTask newInput = new Deadline(inputArray[0], inputArray[1]);
+                mainList.add(newInput);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newInput.toString());
+                System.out.println("Now you have " + mainList.size() + " tasks in the list.");
+            } else if(input.contains(event)){
+                String[] inputArray = input.split(" ", 2);
+                inputArray = inputArray[1].split("/at", 2);
+                MyTask newInput = new Events(inputArray[0], inputArray[1]);
+                mainList.add(newInput);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newInput.toString());
+                System.out.println("Now you have " + mainList.size() + " tasks in the list.");
+            }
+            else {
                 //mainList.add(input);
                 MyTask newInput = new MyTask(input);
                 mainList.add(newInput);
@@ -44,6 +73,7 @@ public class Duke {
     }
 }
 class MyTask{
+
     protected String description;
     protected Boolean isDone;
 
@@ -63,6 +93,48 @@ class MyTask{
     }
 
     public String toString(){
-        return description;
+        //return description;
+        return "[" + this.getStatusIcon() + "] " + description;
+    }
+}
+class Deadline extends MyTask {
+
+    protected String by;
+
+    public Deadline(String description, String by) {
+        super(description);
+        this.by = by;
+    }
+
+    @Override
+    public String toString() {
+        return "[D]" + super.toString() + " (by: " + by + ")";
+    }
+}
+
+class ToDo extends MyTask {
+
+    public ToDo(String description){
+        super(description);
+    }
+
+    @Override
+    public String toString(){
+        return "[T]" + super.toString();
+    }
+}
+
+class Events extends MyTask{
+
+    protected String by;
+
+    public Events(String description, String by){
+        super(description);
+        this.by = by;
+    }
+
+    @Override
+    public String toString(){
+        return "[E]" + super.toString() + " (by: " + by + ")";
     }
 }

@@ -15,6 +15,7 @@ public class Duke {
         String todo = "todo";
         String deadline = "deadline";
         String event = "event";
+        String delete = "delete";
         ArrayList<MyTask> mainList = new ArrayList<MyTask>();
 
         System.out.println("Hello! Im Duke");
@@ -34,35 +35,30 @@ public class Duke {
                     System.out.println(number + "." + mainList.get(i).toString());
                 }
             } else if (input.contains(done)){
-                int index = input.charAt(input.length()-1) - '1';
-                mainList.get(index).markAsDone();
-                System.out.println("Nice! I've marked this task as done:");
-                //System.out.println("[" + mainList.get(index).getStatusIcon() + "] " + mainList.get(index).toString());
-                System.out.println(mainList.get(index).toString());
-            } /*else if(input.contains(todo)){
-                String[] inputArray = input.split(" ", 2);
-                MyTask newInput = new ToDo(inputArray[1]);
-                mainList.add(newInput);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(newInput.toString());
-                System.out.println("Now you have " + mainList.size() + " tasks in the list.");
-            } else if(input.contains(deadline)){
-                String[] inputArray = input.split(" ", 2);
-                inputArray = inputArray[1].split("/by", 2);
-                MyTask newInput = new Deadline(inputArray[0], inputArray[1]);
-                mainList.add(newInput);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(newInput.toString());
-                System.out.println("Now you have " + mainList.size() + " tasks in the list.");
-            } else if(input.contains(event)){
-                String[] inputArray = input.split(" ", 2);
-                inputArray = inputArray[1].split("/at", 2);
-                MyTask newInput = new Events(inputArray[0], inputArray[1]);
-                mainList.add(newInput);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(newInput.toString());
-                System.out.println("Now you have " + mainList.size() + " tasks in the list.");
-            }*/ else {
+                try{
+                    //int index = input.charAt(input.length()-1) - '1';
+                    String[] inputArray = input.split(" ", 2);
+                    int index = Integer.parseInt(inputArray[1]) - 1;
+                    mainList.get(index).markAsDone();
+                    System.out.println("Nice! I've marked this task as done:");
+                    //System.out.println("[" + mainList.get(index).getStatusIcon() + "] " + mainList.get(index).toString());
+                    System.out.println(mainList.get(index).toString());
+                } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("\u2639 OOPS!!! The number of a done cannot be empty.");
+                }
+            } else if (input.contains(delete)) {
+                try {
+                    String[] inputArray = input.split(" ", 2);
+                    int index = Integer.parseInt(inputArray[1]) - 1;
+                    MyTask temp = mainList.get(index);
+                    mainList.remove(index);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(temp.toString());
+                    System.out.println("Now you have " + mainList.size() + " tasks in the list.");
+                } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("\u2639 OOPS!!! The number of a delete cannot be empty.");
+                }
+            } else {
                 //mainList.add(input);
                 //MyTask newInput = new MyTask(input);
                 //mainList.add(newInput);

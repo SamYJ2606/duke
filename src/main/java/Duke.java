@@ -67,27 +67,43 @@ public class Duke {
                 //MyTask newInput = new MyTask(input);
                 //mainList.add(newInput);
                 //System.out.println("added: " + input);
-                MyTask newInput = new MyTask(input);
+                MyTask newInput;
                 if(input.contains(todo)){
-                    String[] inputArray = input.split(" ", 2);
-                    //MyTask newInput = new ToDo(inputArray[1]);
-                    newInput = new ToDo(inputArray[1]);
-                    mainList.add(newInput);
-                    //pointerInput = newInput;
+                    try {
+                        String[] inputArray = input.split(" ", 2);
+                        //MyTask newInput = new ToDo(inputArray[1]);
+                        newInput = new ToDo(inputArray[1]);
+                        mainList.add(newInput);
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("\u2639 OOPS!!! The description of a todo cannot be empty.");
+                        continue;
+                    }
                 } else if (input.contains(deadline)){
-                    String[] inputArray = input.split(" ", 2);
-                    inputArray = inputArray[1].split("/by", 2);
-                    //MyTask newInput = new Deadline(inputArray[0], inputArray[1]);
-                    newInput = new Deadline(inputArray[0], inputArray[1]);
-                    mainList.add(newInput);
-                    //pointerInput = newInput;
+                    try {
+                        String[] inputArray = input.split(" ", 2);
+                        inputArray = inputArray[1].split("/by", 2);
+                        //MyTask newInput = new Deadline(inputArray[0], inputArray[1]);
+                        newInput = new Deadline(inputArray[0], inputArray[1]);
+                        mainList.add(newInput);
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("\u2639 OOPS!!! The description/by of a deadline cannot be empty.");
+                        continue;
+                    }
                 } else if (input.contains(event)){
-                    String[] inputArray = input.split(" ", 2);
-                    inputArray = inputArray[1].split("/at", 2);
-                    //MyTask newInput = new Events(inputArray[0], inputArray[1]);
-                    newInput = new Events(inputArray[0], inputArray[1]);
-                    mainList.add(newInput);
-                    //pointerInput = newInput;
+                    try {
+                        String[] inputArray = input.split(" ", 2);
+                        inputArray = inputArray[1].split("/at", 2);
+                        //MyTask newInput = new Events(inputArray[0], inputArray[1]);
+                        newInput = new Events(inputArray[0], inputArray[1]);
+                        mainList.add(newInput);
+                        //pointerInput = newInput;
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("\u2639 OOPS!!! The description/at of an event cannot be empty.");
+                        continue;
+                    }
+                } else {
+                    System.out.println("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    continue;
                 }
                 System.out.println("Got it. I've added this task:");
                 System.out.println(newInput.toString());

@@ -39,7 +39,7 @@ public class Duke {
                 System.out.println("Nice! I've marked this task as done:");
                 //System.out.println("[" + mainList.get(index).getStatusIcon() + "] " + mainList.get(index).toString());
                 System.out.println(mainList.get(index).toString());
-            } else if(input.contains(todo)){
+            } /*else if(input.contains(todo)){
                 String[] inputArray = input.split(" ", 2);
                 MyTask newInput = new ToDo(inputArray[1]);
                 mainList.add(newInput);
@@ -62,12 +62,36 @@ public class Duke {
                 System.out.println("Got it. I've added this task:");
                 System.out.println(newInput.toString());
                 System.out.println("Now you have " + mainList.size() + " tasks in the list.");
-            }
-            else {
+            }*/ else {
                 //mainList.add(input);
+                //MyTask newInput = new MyTask(input);
+                //mainList.add(newInput);
+                //System.out.println("added: " + input);
                 MyTask newInput = new MyTask(input);
-                mainList.add(newInput);
-                System.out.println("added: " + input);
+                if(input.contains(todo)){
+                    String[] inputArray = input.split(" ", 2);
+                    //MyTask newInput = new ToDo(inputArray[1]);
+                    newInput = new ToDo(inputArray[1]);
+                    mainList.add(newInput);
+                    //pointerInput = newInput;
+                } else if (input.contains(deadline)){
+                    String[] inputArray = input.split(" ", 2);
+                    inputArray = inputArray[1].split("/by", 2);
+                    //MyTask newInput = new Deadline(inputArray[0], inputArray[1]);
+                    newInput = new Deadline(inputArray[0], inputArray[1]);
+                    mainList.add(newInput);
+                    //pointerInput = newInput;
+                } else if (input.contains(event)){
+                    String[] inputArray = input.split(" ", 2);
+                    inputArray = inputArray[1].split("/at", 2);
+                    //MyTask newInput = new Events(inputArray[0], inputArray[1]);
+                    newInput = new Events(inputArray[0], inputArray[1]);
+                    mainList.add(newInput);
+                    //pointerInput = newInput;
+                }
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newInput.toString());
+                System.out.println("Now you have " + mainList.size() + " tasks in the list.");
             }
         }
     }

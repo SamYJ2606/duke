@@ -215,7 +215,9 @@ public class Duke {
                 if (back.equals("pm")){
                     //end = LocalTime.of(Integer.parseInt(timeArray[0]) + 12, Integer.parseInt(timeArray[1]));
                     end = LocalTime.parse(front);
-                    end = start.plusHours(12);
+                    //System.out.println(end.toString());
+                    end = end.plusHours(12);
+                    //System.out.println(end.toString());
                 } else {
                     //end = LocalTime.of(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]));
                     end = LocalTime.parse(front);

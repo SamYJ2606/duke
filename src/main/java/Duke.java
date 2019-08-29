@@ -30,34 +30,44 @@ public class Duke {
         ArrayList<MyTask> mainList = readFile("duke.txt");
         ArrayList<String> stringList = new ArrayList<String>();
 
+        System.out.println("____________________________________________________________");
         System.out.println("Hello! Im Duke");
         System.out.println("What can I do for you?\n");
+        System.out.println("____________________________________________________________");
 
         while(true){
             String input = sc.nextLine();
             if(input.equals(bye)){
+                System.out.println("____________________________________________________________");
                 System.out.println("Bye. Hope to see you again soon!\n");
+                System.out.println("____________________________________________________________");
                 break;
             } else if(input.equals(list)){
                 //System.out.println(mainList.toString());
+                System.out.println("____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
                 for(int i=0;i<mainList.size();i++){
                     int number = i+1;
                     //System.out.println( number + ".[" + mainList.get(i).getStatusIcon() + "] " + mainList.get(i).toString());
                     System.out.println(number + "." + mainList.get(i).toString());
                 }
-                System.out.println("\n");
+                //System.out.println("\n");
+                System.out.println("____________________________________________________________");
             } else if (input.contains(done)){
                 try{
                     //int index = input.charAt(input.length()-1) - '1';
                     String[] inputArray = input.split(" ", 2);
                     int index = Integer.parseInt(inputArray[1]) - 1;
                     mainList.get(index).markAsDone();
+                    System.out.println("____________________________________________________________");
                     System.out.println("Nice! I've marked this task as done:\n");
+                    System.out.println("____________________________________________________________");
                     //System.out.println("[" + mainList.get(index).getStatusIcon() + "] " + mainList.get(index).toString());
                     System.out.println(mainList.get(index).toString());
                 } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("____________________________________________________________");
                     System.out.println("\u2639 OOPS!!! The number of a done cannot be empty.\n");
+                    System.out.println("____________________________________________________________");
                 }
             } else if (input.contains(delete)) {
                 try {
@@ -65,11 +75,15 @@ public class Duke {
                     int index = Integer.parseInt(inputArray[1]) - 1;
                     MyTask temp = mainList.get(index);
                     mainList.remove(index);
+                    System.out.println("____________________________________________________________");
                     System.out.println("Noted. I've removed this task:");
                     System.out.println(temp.toString());
                     System.out.println("Now you have " + mainList.size() + " tasks in the list.\n");
+                    System.out.println("____________________________________________________________");
                 } catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("____________________________________________________________");
                     System.out.println("\u2639 OOPS!!! The number of a delete cannot be empty.\n");
+                    System.out.println("____________________________________________________________");
                 }
             } else {
                 //mainList.add(input);
@@ -84,7 +98,9 @@ public class Duke {
                         newInput = new ToDo(inputArray[1]);
                         mainList.add(newInput);
                     } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("____________________________________________________________");
                         System.out.println("\u2639 OOPS!!! The description of a todo cannot be empty.\n");
+                        System.out.println("____________________________________________________________");
                         continue;
                     }
                 } else if (input.contains(deadline)){
@@ -95,7 +111,9 @@ public class Duke {
                         newInput = new Deadline(inputArray[0], inputArray[1]);
                         mainList.add(newInput);
                     } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("____________________________________________________________");
                         System.out.println("\u2639 OOPS!!! The description/by of a deadline cannot be empty.\n");
+                        System.out.println("____________________________________________________________");
                         continue;
                     }
                 } else if (input.contains(event)){
@@ -107,16 +125,22 @@ public class Duke {
                         mainList.add(newInput);
                         //pointerInput = newInput;
                     } catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("____________________________________________________________");
                         System.out.println("\u2639 OOPS!!! The description/at of an event cannot be empty.\n");
+                        System.out.println("____________________________________________________________");
                         continue;
                     }
                 } else {
+                    System.out.println("____________________________________________________________");
                     System.out.println("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(\n");
+                    System.out.println("____________________________________________________________");
                     continue;
                 }
+                System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
                 System.out.println(newInput.toString());
                 System.out.println("Now you have " + mainList.size() + " tasks in the list.\n");
+                System.out.println("____________________________________________________________");
             }
             //FileWriter fileWriter = new FileWriter("duke.txt");
             //PrintWriter printWriter = new PrintWriter("duke.txt", "");
@@ -234,7 +258,9 @@ public class Duke {
         try{
             stringList = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
         } catch (IOException e){
+            System.out.println("____________________________________________________________");
             System.out.println("Unable to read file.");
+            System.out.println("____________________________________________________________");
         }
         ArrayList<MyTask> mainList = new ArrayList<MyTask>();
         MyTask newTask;

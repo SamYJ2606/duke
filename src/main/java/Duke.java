@@ -4,6 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
 import java.util.*;
 
 public class Duke {
@@ -141,11 +145,82 @@ public class Duke {
             temp = tempArray[0] + "/" + tempArray[1] + "/";
             if(tempArray[0].equals("T")){
                 temp = temp + tempArray[2].strip() + "\n";
-            } else {
+            } else if(tempArray[0].equals("D")){
                 tempArray = tempArray[2].split("by:");
                 tempArray[0] = tempArray[0].replace("(", " ");
                 tempArray[1] = tempArray[1].replace(")", " ");
-                temp = temp + tempArray[0].strip() + "/" + tempArray[1].strip() + "\n";
+                temp = temp + tempArray[0].strip() + "/";
+                tempArray = tempArray[1].split(",");
+                String[] dateArray = tempArray[0].strip().split(" ");
+                LocalDate date = LocalDate.of(Integer.parseInt(dateArray[3]), Month.valueOf(dateArray[2]).getValue(), Integer.parseInt(dateArray[0]));
+                tempArray[1] = tempArray[1].strip();
+                String front = tempArray[1].substring(0, tempArray[1].length()-2);
+                String back = tempArray[1].substring(tempArray[1].length()-2);
+                front = front.strip();
+                //System.out.println(front);
+                //System.out.println(back);
+                //String[] timeArray = front.split(".");
+                front = front.replace(".", ":");
+                LocalTime time = LocalTime.of(0,0);
+                //System.out.println(timeArray[0]);
+                //System.out.println(timeArray[1]);
+                if (back.equals("pm")){
+                    time = LocalTime.parse(front);
+                    time = time.plusHours(12);
+                } else {
+                    time = LocalTime.parse(front);
+                }
+                LocalDateTime DateTime = LocalDateTime.of(date, time);
+                temp = temp + DateTime.toString();
+            } else if (tempArray[0].equals("E")){
+                tempArray = tempArray[2].split("by:");
+                tempArray[0] = tempArray[0].replace("(", " ");
+                tempArray[1] = tempArray[1].replace(")", " ");
+                temp = temp + tempArray[0].strip() + "/";
+                tempArray = tempArray[1].split(",");
+                String[] dateArray = tempArray[0].strip().split(" ");
+                //System.out.println(tempArray[0]);
+                //System.out.println(dateArray[0]);
+                //System.out.println(dateArray[2]);
+                //System.out.println(dateArray[3]);
+                LocalDate date = LocalDate.of(Integer.parseInt(dateArray[3]), Month.valueOf(dateArray[2]).getValue(), Integer.parseInt(dateArray[0]));
+                tempArray = tempArray[1].split("-");
+                String front = tempArray[0].substring(0, tempArray[0].length()-2);
+                String back = tempArray[0].substring(tempArray[0].length()-2);
+                if(front.length()==4)
+                    front = "0" + front;
+                front = front.strip();
+                //String[] timeArray = front.split(".");
+                front = front.replace(".", ":");
+                LocalTime start = LocalTime.of(0,0);
+                if (back.equals("pm")){
+                    //start = LocalTime.of(Integer.parseInt(timeArray[0]) + 12, Integer.parseInt(timeArray[1]));
+                    start = LocalTime.parse(front);
+                    start = start.plusHours(12);
+                } else {
+                    //start = LocalTime.of(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]));
+                    start = LocalTime.parse(front);
+                }
+                tempArray[1] = tempArray[1].strip();
+                front = tempArray[1].substring(0, tempArray[1].length()-2);
+                if(front.length()==4)
+                    front = "0" + front;
+                back = tempArray[1].substring(tempArray[1].length()-2);
+                front = front.strip();
+                front = front.replace(".", ":");
+                //timeArray = front.split(".");
+                LocalTime end = LocalTime.of(0,0);
+                //System.out.println(front);
+                //System.out.println(back);
+                if (back.equals("pm")){
+                    //end = LocalTime.of(Integer.parseInt(timeArray[0]) + 12, Integer.parseInt(timeArray[1]));
+                    end = LocalTime.parse(front);
+                    end = start.plusHours(12);
+                } else {
+                    //end = LocalTime.of(Integer.parseInt(timeArray[0]), Integer.parseInt(timeArray[1]));
+                    end = LocalTime.parse(front);
+                }
+                temp = temp + date.toString() + " " + start.toString() + "-" + end.toString();
             }
             stringList.add(temp);
         }
@@ -220,15 +295,26 @@ class MyTask{
 }
 class Deadline extends MyTask {
 
-    protected String by;
+    //protected String by;
+    protected LocalDateTime by;
 
     public Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        this.by = LocalDateTime.parse(by);
     }
 
     public String getBy(){
-        return by;
+        String timeString = "";
+        String Date = by.getDayOfMonth() + " of " + by.getMonth().toString() + " " + by.getYear();
+        LocalTime Time = by.toLocalTime();
+        //LocalTime Noon =
+        if(Time.isAfter(LocalTime.NOON)){
+            timeString = (Time.getHour() - 12) + "." + Time.getMinute() + "pm";
+        } else {
+            timeString = Time.getHour() + "." + Time.getMinute() + "am";
+        }
+        Date = Date + ", " + timeString;
+        return Date;
     }
 
     @Override
@@ -251,15 +337,36 @@ class ToDo extends MyTask {
 
 class Events extends MyTask{
 
-    protected String by;
+    //protected String by;
+    protected LocalDate Date;
+    protected LocalTime Start;
+    protected LocalTime End;
 
     public Events(String description, String by){
         super(description);
-        this.by = by;
+        String[] byArray = by.split(" ");
+        this.Date = LocalDate.parse(byArray[0]);
+        byArray = byArray[1].split("-");
+        this.Start = LocalTime.parse(byArray[0]);
+        this.End = LocalTime.parse(byArray[1]);
     }
 
     public String getBy(){
-        return by;
+        String dateString = Date.getDayOfMonth() + " of " + Date.getMonth().toString() + " " + Date.getYear();
+        String startString = " ";
+        String endString = " ";
+        if(Start.isAfter(LocalTime.NOON)){
+            startString = (Start.getHour() - 12) + "." + Start.getMinute() + "pm";
+        } else {
+            startString = Start.getHour() + "." + Start.getMinute() + "am";
+        }
+        if(End.isAfter(LocalTime.NOON)){
+            endString = (End.getHour() - 12) + "." + End.getMinute() + "pm";
+        } else {
+            endString = End.getHour() + "." + End.getMinute() + "am";
+        }
+        dateString = dateString + ", " + startString + "-" + endString;
+        return dateString;
     }
 
     @Override

@@ -17,7 +17,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class Storage {
-    public static void saveFile(ArrayList<MyTask> list) throws IOException {
+
+    private String StringPath;
+
+    public Storage(String stringPath){
+        this.StringPath = stringPath;
+    }
+
+    public void saveFile(ArrayList<MyTask> list) throws IOException {
         ArrayList<String> stringList = new ArrayList<String>();
         for(int i=0;i<list.size();i++){
             String temp = list.get(i).toString();
@@ -93,13 +100,13 @@ public class Storage {
             }
             stringList.add(temp);
         }
-        Path file = Paths.get("duke.txt");
+        Path file = Paths.get(this.StringPath);
         Files.write(file,stringList, StandardCharsets.UTF_8);
     }
-    public static ArrayList<MyTask> readFile(String fileName) {
+    public ArrayList<MyTask> readFile() {
         List<String> stringList = Collections.emptyList();
         try{
-            stringList = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+            stringList = Files.readAllLines(Paths.get(this.StringPath), StandardCharsets.UTF_8);
         } catch (IOException e){
             System.out.println("____________________________________________________________");
             System.out.println("Unable to read file.");

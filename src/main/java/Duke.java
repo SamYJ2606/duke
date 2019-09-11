@@ -1,7 +1,4 @@
-import MyTask.Deadline;
-import MyTask.Events;
-import MyTask.MyTask;
-import MyTask.ToDo;
+import MyTask.*;
 
 import java.io.IOException;
 import java.util.Scanner;

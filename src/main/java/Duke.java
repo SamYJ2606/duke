@@ -4,15 +4,7 @@ import MyTask.MyTask;
 import MyTask.ToDo;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.util.*;
+import java.util.Scanner;
 
 public class Duke {
 
@@ -37,14 +29,7 @@ public class Duke {
         String delete = "delete";
         String find = "find";
 
-        //Storage storage = new Storage("duke.txt");
-        //Ui ui = new Ui();
-        //TaskList mainList = new TaskList(storage.readFile());
-
-        //ArrayList<MyTask> mainList = storage.readFile("duke.txt");
-        ArrayList<String> stringList = new ArrayList<String>();
-
-        ui.printIntro();
+        this.ui.printIntro();
 
         while(true) {
             String input = sc.nextLine();
@@ -60,9 +45,9 @@ public class Duke {
                     this.tasks.getList().get(index).markAsDone();
                     this.ui.printDone(this.tasks.getList().get(index));
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                     System.out.println("\u2639 OOPS!!! The number of a done cannot be empty.\n");
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                 }
             } else if (input.contains(delete)) {
                 try {
@@ -71,27 +56,27 @@ public class Duke {
                     MyTask temp = this.tasks.getList().get(index);
                     //mainList.remove(index);
                     this.tasks.removeFromList(index);
-                    ui.printDelete(this.tasks, temp);
+                    this.ui.printDelete(this.tasks, temp);
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                     System.out.println("\u2639 OOPS!!! The number of a delete cannot be empty.\n");
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                 }  catch(IndexOutOfBoundsException e){
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                     System.out.println("\u2639 OOPS!!! The number not found.\n");
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                 }
             } else if(input.contains(find)){
                 try{
                     String[] inputArray = input.split(" ", 2);
                     TaskList outputList = this.tasks.findFromList(inputArray[1]);
                     if(outputList.getList().size()>0){
-                        ui.printList(outputList);
+                        this.ui.printList(outputList);
                     }
                 } catch (ArrayIndexOutOfBoundsException e){
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                     System.out.println("\u2639 OOPS!!! The number of a delete cannot be empty.\n");
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                 }
             } else {
                 MyTask newInput;
@@ -101,9 +86,9 @@ public class Duke {
                         newInput = new ToDo(inputArray[1]);
                         this.tasks.addToList(newInput);
                     } catch (ArrayIndexOutOfBoundsException e){
-                        System.out.println("____________________________________________________________");
+                        this.ui.printLine();
                         System.out.println("\u2639 OOPS!!! The description of a todo cannot be empty.\n");
-                        System.out.println("____________________________________________________________");
+                        this.ui.printLine();
                         continue;
                     }
                 } else if (input.contains(deadline)){
@@ -113,9 +98,9 @@ public class Duke {
                         newInput = new Deadline(inputArray[0], inputArray[1]);
                         this.tasks.addToList(newInput);
                     } catch (ArrayIndexOutOfBoundsException e){
-                        System.out.println("____________________________________________________________");
+                        this.ui.printLine();
                         System.out.println("\u2639 OOPS!!! The description/by of a deadline cannot be empty.\n");
-                        System.out.println("____________________________________________________________");
+                        this.ui.printLine();
                         continue;
                     }
                 } else if (input.contains(event)){
@@ -125,20 +110,20 @@ public class Duke {
                         newInput = new Events(inputArray[0], inputArray[1]);
                         this.tasks.addToList(newInput);
                     } catch (ArrayIndexOutOfBoundsException e){
-                        System.out.println("____________________________________________________________");
+                        this.ui.printLine();
                         System.out.println("\u2639 OOPS!!! The description/at of an event cannot be empty.\n");
-                        System.out.println("____________________________________________________________");
+                        this.ui.printLine();
                         continue;
                     }
                 } else {
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                     System.out.println("\u2639 OOPS!!! I'm sorry, but I don't know what that means :-(\n");
-                    System.out.println("____________________________________________________________");
+                    this.ui.printLine();
                     continue;
                 }
-                ui.printAdd(this.tasks, newInput);
+                this.ui.printAdd(this.tasks, newInput);
             }
-            storage.saveFile(this.tasks.getList());
+            this.storage.saveFile(this.tasks.getList());
         }
     }
 

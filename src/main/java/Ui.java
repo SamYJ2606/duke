@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Ui {
 
-    private void printLine(){
+    public void printLine(){
         System.out.println("______________________________________________________");
     }
 

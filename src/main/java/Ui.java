@@ -1,56 +1,39 @@
-import MyTask.*;
-
-import java.util.ArrayList;
+import MyTask.MyTask;
 
 public class Ui {
 
-    public void printLine(){
-        System.out.println("______________________________________________________");
+    public String printLine(){
+        return "____________________________________\n";
     }
 
-    public void printIntro(){
-        this.printLine();
-        System.out.println("Hello! Im Duke");
-        System.out.println("What can I do for you?\n");
-        this.printLine();
+    public String printIntro(){
+        return this.printLine() + "Hello! Im Duke\nWhat can I do for you?\n" + this.printLine();
     }
 
-    public void printExit(){
-        this.printLine();
-        System.out.println("Bye. Hope to see you again soon!\n");
-        this.printLine();
+    public String printExit(){
+        return this.printLine() + "Bye. Hope to see you again soon!\n" + this.printLine();
     }
 
-    public void printList(TaskList mainList){
-        this.printLine();
-        System.out.println("Here are the tasks in your list:");
+    public String printList(TaskList mainList){
+        String output;
+        output = this.printLine() + "Here are the tasks in your list:\n";
         for (int i = 0; i < mainList.getList().size(); i++) {
             int number = i + 1;
-            System.out.println(number + "." + mainList.getList().get(i).toString());
+            output = output + number + "." + mainList.getList().get(i).toString() + "\n";
         }
-        this.printLine();
+        output = output + this.printLine();
+        return output;
     }
 
-    public void printDone(MyTask task){
-        this.printLine();
-        System.out.println("Nice! I've marked this task as done:\n");
-        System.out.println(task.toString());
-        this.printLine();
+    public String printDone(MyTask task){
+        return this.printLine() + "Nice! I've marked this task as done:\n" + task.toString() + this.printLine();
     }
 
-    public void printDelete(TaskList mainList, MyTask task){
-        this.printLine();
-        System.out.println("Noted. I've removed this task:");
-        System.out.println(task.toString());
-        System.out.println("Now you have " + mainList.getList().size() + " tasks in the list.\n");
-        this.printLine();
+    public String printDelete(TaskList mainList, MyTask task){
+        return this.printLine() + "Noted. I've removed this task:\n" + task.toString() + "Now you have " + mainList.getList().size() + " tasks in the list.\n" + this.printLine();
     }
 
-    public void printAdd(TaskList mainList, MyTask task){
-        this.printLine();
-        System.out.println("Got it. I've added this task:");
-        System.out.println(task.toString());
-        System.out.println("Now you have " + mainList.getList().size() + " tasks in the list.\n");
-        this.printLine();
+    public String printAdd(TaskList mainList, MyTask task){
+        return this.printLine() + "Got it. I've added this task:\n" + task.toString() + "Now you have " + mainList.getList().size() + " tasks in the list.\n" + this.printLine();
     }
 }

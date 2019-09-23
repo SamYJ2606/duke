@@ -18,7 +18,7 @@ Displays help menu.
 Format: `help`
 
 ### 2.2. Exiting the program: `bye`
-Exits the program.\n
+Exits the program.
 Format: `bye`
 
 ### 2.3. Listing all tasks: `list`

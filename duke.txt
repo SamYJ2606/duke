@@ -1,4 +1,4 @@
 D/1/return book/2007-12-03T10:15
-E/0/project meeting/2007-12-03 10:15-13:15
+E/0/project meeting/2007-12-03T10:15-13:15
 T/0/meet friends for dinner
 

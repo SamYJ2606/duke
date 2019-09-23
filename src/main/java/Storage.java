@@ -96,22 +96,16 @@ public class Storage {
                 } else {
                     end = LocalTime.parse(front);
                 }
-                temp = temp + date.toString() + " " + start.toString() + "-" + end.toString();
+                temp = temp + date.toString() + "T" + start.toString() + "-" + end.toString();
             }
             stringList.add(temp);
         }
         Path file = Paths.get(this.StringPath);
         Files.write(file,stringList, StandardCharsets.UTF_8);
     }
-    public ArrayList<MyTask> readFile() {
+    public ArrayList<MyTask> readFile() throws IOException{
         List<String> stringList = Collections.emptyList();
-        try{
-            stringList = Files.readAllLines(Paths.get(this.StringPath), StandardCharsets.UTF_8);
-        } catch (IOException e){
-            System.out.println("____________________________________________________________");
-            System.out.println("Unable to read file.");
-            System.out.println("____________________________________________________________");
-        }
+        stringList = Files.readAllLines(Paths.get(this.StringPath), StandardCharsets.UTF_8);
         ArrayList<MyTask> mainList = new ArrayList<MyTask>();
         MyTask newTask;
         for(int i=0;i<stringList.size();i++){

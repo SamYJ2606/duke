@@ -26,7 +26,7 @@ public class Ui {
     }
 
     public String printDone(MyTask task){
-        return this.printLine() + "Nice! I've marked this task as done:\n" + task.toString() + this.printLine();
+        return this.printLine() + "Nice! I've marked this task as done:\n" + task.toString() + "\n" + this.printLine();
     }
 
     public String printDelete(TaskList mainList, MyTask task){
@@ -38,6 +38,6 @@ public class Ui {
     }
 
     public String printHelp(){
-        return this.printLine() + "- list\n- bye\n- todo Description\n- deadline Description /by Day\n- event Description /at Day Time-Time\n- find Keyword\n- done Index\n- delete Index\n" + this.printLine();
+        return this.printLine() + "- list\n- bye\n- todo Description\n- deadline Description /by 0000-12-31T23:39\n- event Description /at 0000-12-31T00:00-23:39\n- find Keyword\n- done Index\n- delete Index\n" + this.printLine();
     }
 }

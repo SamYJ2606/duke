@@ -15,7 +15,11 @@ public class Duke {
     public Duke(String filePath){
         this.ui = new Ui();
         this.storage = new Storage(filePath);
-        this.tasks = new TaskList(this.storage.readFile());
+        try {
+            tasks = new TaskList(storage.readFile());
+        } catch (IOException e) {
+            tasks = new TaskList();
+        }
     }
 
     /**
@@ -88,7 +92,7 @@ public class Duke {
                 try {
                     String[] inputArray = input.split(" ", 2);
                     inputArray = inputArray[1].split("/by", 2);
-                    newInput = new Deadline(inputArray[0], inputArray[1]);
+                    newInput = new Deadline(inputArray[0], inputArray[1].strip());
                     this.tasks.addToList(newInput);
                 } catch (ArrayIndexOutOfBoundsException e){
                     return this.ui.printLine() + "\u2639 OOPS!!! The description/by of a deadline cannot be empty.\n" + this.ui.printLine();
@@ -97,7 +101,7 @@ public class Duke {
                 try {
                     String[] inputArray = input.split(" ", 2);
                     inputArray = inputArray[1].split("/at", 2);
-                    newInput = new Events(inputArray[0], inputArray[1]);
+                    newInput = new Events(inputArray[0], inputArray[1].strip());
                     this.tasks.addToList(newInput);
                 } catch (ArrayIndexOutOfBoundsException e){
                     return this.ui.printLine() + "\u2639 OOPS!!! The description/at of an event cannot be empty.\n" + this.ui.printLine();

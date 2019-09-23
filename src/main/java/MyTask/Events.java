@@ -12,7 +12,7 @@ public class Events extends MyTask{
 
     public Events(String description, String by){
         super(description);
-        String[] byArray = by.split(" ");
+        String[] byArray = by.split("T");
         this.Date = LocalDate.parse(byArray[0]);
         byArray = byArray[1].split("-");
         this.Start = LocalTime.parse(byArray[0]);

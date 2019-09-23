@@ -23,7 +23,7 @@ public class Duke {
      * Replace this stub with your completed method.
      */
 
-    String getResponse(String input) throws IOException {
+    public String getResponse(String input) throws IOException {
         String bye = "bye";
         String list = "list";
         String done = "done";
@@ -32,6 +32,7 @@ public class Duke {
         String event = "event";
         String delete = "delete";
         String find = "find";
+        String help = "help";
 
         if (input.equals(bye)) {
             return this.ui.printExit();
@@ -71,6 +72,8 @@ public class Duke {
             } catch (ArrayIndexOutOfBoundsException e){
                 return this.ui.printLine() + "\u2639 OOPS!!! The number of a delete cannot be empty.\n" + this.ui.printLine();
             }
+        }else if(input.equals(help)){
+            return this.ui.printHelp();
         } else {
             MyTask newInput;
             if(input.contains(todo)){
@@ -109,5 +112,8 @@ public class Duke {
         return this.ui.printIntro();
     }
 
+    public String printIntro(){
+        return this.ui.printIntro();
+    }
 
 }

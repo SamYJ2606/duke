@@ -30,10 +30,14 @@ public class Ui {
     }
 
     public String printDelete(TaskList mainList, MyTask task){
-        return this.printLine() + "Noted. I've removed this task:\n" + task.toString() + "Now you have " + mainList.getList().size() + " tasks in the list.\n" + this.printLine();
+        return this.printLine() + "Noted. I've removed this task:\n" + task.toString() + "\nNow you have " + mainList.getList().size() + " tasks in the list.\n" + this.printLine();
     }
 
     public String printAdd(TaskList mainList, MyTask task){
-        return this.printLine() + "Got it. I've added this task:\n" + task.toString() + "Now you have " + mainList.getList().size() + " tasks in the list.\n" + this.printLine();
+        return this.printLine() + "Got it. I've added this task:\n" + task.toString() + "\nNow you have " + mainList.getList().size() + " tasks in the list.\n" + this.printLine();
+    }
+
+    public String printHelp(){
+        return this.printLine() + "- list\n- bye\n- todo Description\n- deadline Description /by Day\n- event Description /at Day Time-Time\n- find Keyword\n- done Index\n- delete Index\n" + this.printLine();
     }
 }

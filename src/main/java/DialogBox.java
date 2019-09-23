@@ -20,6 +20,7 @@ import java.util.Collections;
 public class DialogBox extends HBox {
     @FXML
     private Label dialog;
+    //private Text dialog;
     @FXML
     private ImageView displayPicture;
 

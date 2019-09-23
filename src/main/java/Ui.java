@@ -22,6 +22,8 @@ public class Ui {
             output = output + number + "." + mainList.getList().get(i).toString() + "\n";
         }
         output = output + this.printLine();
+        if (mainList.getList().size()==0)
+            output = this.printLine() + "List is currently empty.\n" + this.printLine();
         return output;
     }
 

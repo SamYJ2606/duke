@@ -6,7 +6,7 @@
 2. Download the latest `duke-0.2.1.jar`. 
 3. Copy the file to the folder you want to use as the home folder for your Duke.
 4. Double-click the file to start the app. The GUI should appear in a few seconds.
-![Image of Ui](/images/Ui.png)
+![Image of Ui](docs/Ui.PNG)
 5. Type the command in the command box and press `Enter` to execute it.
    e.g. typing `help` and pressing `Enter` will open the help window.
 6. Refer to Section 2, “Features” for details of each command.
